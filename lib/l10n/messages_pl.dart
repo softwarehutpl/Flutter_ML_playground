@@ -21,6 +21,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "cameraPermissionsNotGranted" : MessageLookupByLibrary.simpleMessage("Uprawnienia do korzystania z Aparatu i Mikrofonu są niezbędne. Proszę udostępnij Aplikacji dostęp do nich w ustawieniach systemowych i spróbuj ponownie."),
+    "cameraPreview" : MessageLookupByLibrary.simpleMessage("Uruchom podgląd z aparatu"),
+    "cameraUnknownError" : MessageLookupByLibrary.simpleMessage("Nie udało się zainicjalizować podglądu z aparatu z powodu nieznanego błędu. Proszę spróbuj ponownie później."),
+    "retry" : MessageLookupByLibrary.simpleMessage("Ponów"),
     "title" : MessageLookupByLibrary.simpleMessage("Readnod PL")
   };
 }

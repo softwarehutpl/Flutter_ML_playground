@@ -1,8 +1,32 @@
 {
-  "@@last_modified": "2020-07-02T13:20:42.240228",
+  "@@last_modified": "2020-07-02T16:14:51.627200",
   "title": "Readnod",
   "@title": {
     "description": "Application title/name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cameraPreview": "Start camera preview",
+  "@cameraPreview": {
+    "description": "Text used on button for starting camera preview for text recognition",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cameraPermissionsNotGranted": "Camera & Microphone permissions are required. Please grant them in App settings and then retry initialization.",
+  "@cameraPermissionsNotGranted": {
+    "description": "Text used to inform user that camera related permissions are required",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cameraUnknownError": "Unable to initialize camera preview due to unknown error. Please try again later",
+  "@cameraUnknownError": {
+    "description": "Text used to inform user that some unknown error occurred during camera initialization",
+    "type": "text",
+    "placeholders": {}
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Not much to say it's retry",
     "type": "text",
     "placeholders": {}
   }
