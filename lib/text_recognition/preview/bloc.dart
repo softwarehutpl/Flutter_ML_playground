@@ -5,9 +5,12 @@ import 'package:readnod/text_recognition/preview/states.dart';
 
 class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
 
+  static final _firstCameraIndex = 0;
+
   final _cameraResolution =  ResolutionPreset.high;
   List<CameraDescription> _cameras = [];
   CameraController _controller;
+  int _currentCameraIndex = _firstCameraIndex;
 
   @override
   PreviewState get initialState {
@@ -23,12 +26,18 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
     if (event is InitializedPreviewEvent) {
       yield ReadyPreviewState(controller: _controller);
     }
+
+    if (event is SwitchCameraPreviewEvent) {
+      _calculateNewCameraIndex();
+      yield* initializeCamera();
+    }
   }
 
   Stream<PreviewState> initializeCamera() async* {
     try {
       _cameras = await availableCameras();
-      _controller = CameraController(_cameras.first, _cameraResolution);
+      await _controller?.dispose();
+      _controller = CameraController(_cameras[_currentCameraIndex], _cameraResolution);
       await _controller.initialize();
       add(InitializedPreviewEvent());
     } catch(e) {
@@ -44,9 +53,16 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
     return e is CameraException && e.description.contains("permission not granted");
   }
 
+  void _calculateNewCameraIndex() {
+    _currentCameraIndex++;
+    if (_currentCameraIndex >= _cameras.length) {
+      _currentCameraIndex = _firstCameraIndex;
+    }
+  }
+
   @override
-  Future<void> close() {
-    _controller?.dispose();
+  Future<void> close() async {
+    await  _controller?.dispose();
     return super.close();
   }
 }

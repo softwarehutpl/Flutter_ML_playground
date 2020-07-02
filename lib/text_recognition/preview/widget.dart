@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:readnod/translations.dart';
 
 class CameraPreviewWidget extends StatefulWidget {
-
   static final route = "/text/recognition/preview";
 
   @override
@@ -45,31 +44,18 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
 
           return Scaffold(
             body: Stack(
+              alignment: Alignment.center,
               children: <Widget>[
                 content,
+                Positioned(top: 0.0, right: 0.0, child: _buildCloseButton(context)),
                 Positioned(
-                    right: 0.0,
-                    child: _buildCloseButton(context)
-                ),
+                  bottom: 0.0,
+                  child: _buildSwitchCameraButton(context, state),
+                )
               ],
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildCloseButton(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: CircleAvatar(
-        backgroundColor: Colors.white54,
-        child: IconButton(
-            icon: Icon(Icons.close, color: Colors.black,),
-            onPressed: () {
-              popScreen(context);
-            }
-        ),
       ),
     );
   }
@@ -89,17 +75,11 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
   }
 
   Widget _buildPermissionsNotGranted(BuildContext context) {
-    return _buildError(
-        context,
-        Translations.of(context).cameraPermissionsNotGranted
-    );
+    return _buildError(context, Translations.of(context).cameraPermissionsNotGranted);
   }
 
   Widget _buildUnknownError(BuildContext context) {
-    return _buildError(
-        context,
-        Translations.of(context).cameraUnknownError
-    );
+    return _buildError(context, Translations.of(context).cameraUnknownError);
   }
 
   Widget _buildError(BuildContext context, String message) {
@@ -131,6 +111,49 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
         size: Size.square(64),
       ),
     );
+  }
+
+  Widget _buildCloseButton(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: CircleAvatar(
+        backgroundColor: Colors.white54,
+        child: IconButton(
+            icon: Icon(
+              Icons.close,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              popScreen(context);
+            }),
+      ),
+    );
+  }
+
+  Widget _buildSwitchCameraButton(BuildContext context, PreviewState state) {
+    if (state is ReadyPreviewState) {
+      return Padding(
+        padding: EdgeInsets.all(8.0),
+        child: SizedBox.fromSize(
+          size: Size.fromRadius(32),
+          child: CircleAvatar(
+            backgroundColor: Colors.white54,
+            child: IconButton(
+                icon: Icon(
+                  Icons.switch_camera,
+                  color: Colors.black,
+                  size: 32,
+                ),
+                onPressed: () {
+                  // TODO: switch camera in round robin fashion
+                  _bloc.add(SwitchCameraPreviewEvent());
+                }),
+          ),
+        ),
+      );
+    } else {
+      return SizedBox.shrink();
+    }
   }
 
   @override
