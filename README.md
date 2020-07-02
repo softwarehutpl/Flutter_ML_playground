@@ -12,6 +12,8 @@ It's  a playground for text recognition using machine learning & Flutter.
 \- live camera feed & data source for machine learning process
 * [ML Kit Vision](https://pub.dev/packages/firebase_ml_vision#-readme-tab-)
 \- machine learning kit that contains among others OCR
+* [Internationalization and localization](https://pub.dev/packages/intl)
+\- for App hardcoded text to be localized
 
 
 ## Localization
