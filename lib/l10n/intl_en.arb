@@ -1,0 +1,9 @@
+{
+  "@@last_modified": "2020-07-02T13:20:42.240228",
+  "title": "Readnod",
+  "@title": {
+    "description": "Application title/name",
+    "type": "text",
+    "placeholders": {}
+  }
+}
