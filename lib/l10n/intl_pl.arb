@@ -1,0 +1,33 @@
+{
+  "@@last_modified": "2020-07-02T16:14:51.627200",
+  "title": "Readnod PL",
+  "@title": {
+    "description": "Application title/name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cameraPreview": "Uruchom podgląd z aparatu",
+  "@cameraPreview": {
+    "description": "Text used on button for starting camera preview for text recognition",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cameraPermissionsNotGranted": "Uprawnienia do korzystania z Aparatu i Mikrofonu są niezbędne. Proszę udostępnij Aplikacji dostęp do nich w ustawieniach systemowych i spróbuj ponownie.",
+  "@cameraPermissionsNotGranted": {
+    "description": "Text used to inform user that camera related permissions are required",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cameraUnknownError": "Nie udało się zainicjalizować podglądu z aparatu z powodu nieznanego błędu. Proszę spróbuj ponownie później.",
+  "@cameraUnknownError": {
+    "description": "Text used to inform user that some unknown error occurred during camera initialization",
+    "type": "text",
+    "placeholders": {}
+  },
+  "retry": "Ponów",
+  "@retry": {
+    "description": "Not much to say it's retry",
+    "type": "text",
+    "placeholders": {}
+  }
+}
