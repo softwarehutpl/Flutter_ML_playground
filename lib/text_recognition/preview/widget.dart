@@ -52,7 +52,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
                   bottom: 0.0,
                   child: _buildSwitchCameraButton(context, state),
                 )
-              ],
+              ]..addAll(_buildRecognizedTexts(context, state)),
             ),
           );
         },
@@ -145,7 +145,6 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
                   size: 32,
                 ),
                 onPressed: () {
-                  // TODO: switch camera in round robin fashion
                   _bloc.add(SwitchCameraPreviewEvent());
                 }),
           ),
@@ -154,6 +153,47 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
     } else {
       return SizedBox.shrink();
     }
+  }
+
+  List<Widget> _buildRecognizedTexts(BuildContext context, PreviewState state) {
+    final List<Widget> texts = [];
+    if (state is ReadyPreviewState) {
+      final size = MediaQuery.of(context).size;
+      final imageRatio = state.imageSize.width / state.imageSize.height;
+      final deviceRatio = size.width / size.height;
+      final ratio = ((state.controller.value.aspectRatio) / (deviceRatio / imageRatio));
+
+      print("Building texts.\n"
+          "Image size is width: ${state.imageSize.width} height: ${state.imageSize.height} ratio: $imageRatio\n"
+          "Device size is width: ${size.width} height: ${size.height} ratio: $deviceRatio\n"
+          "Preview size is width: ${state.controller.value.previewSize.width} height: ${state.controller.value.previewSize.height} ratio: ${state.controller.value.aspectRatio}\n"
+          "So calculated ratio is $ratio");
+
+      final textsWidgets = state.texts?.map((e) {
+        print(e.text);
+        final topTranslatedToPreview = e.boundingBox.top * ratio;
+        final leftTranslatedToPreview = e.boundingBox.left * ratio;
+        print("Mapping text ${e.text}\n"
+            "Image top: ${e.boundingBox.top} left: ${e.boundingBox.left}\n"
+            "New top: $topTranslatedToPreview left: $leftTranslatedToPreview");
+        return Positioned(
+            top: topTranslatedToPreview,
+            left: leftTranslatedToPreview,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                e.text,
+                style: TextStyle(
+                    backgroundColor: Colors.white70,
+                    color: Colors.black
+                ),
+              ),
+            )
+        );
+      }) ?? [];
+      texts.addAll(textsWidgets);
+    }
+    return texts;
   }
 
   @override

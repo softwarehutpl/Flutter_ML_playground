@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "923416045439",
+    "firebase_url": "https://readnod.firebaseio.com",
+    "project_id": "readnod",
+    "storage_bucket": "readnod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:923416045439:android:317943c153954cf9f2dc4a",
+        "android_client_info": {
+          "package_name": "com.softwarehut.mobile.readnod"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "923416045439-edcr0ohik9l4k4s7c280otd1h6msdapa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.softwarehut.mobile.readnod",
+            "certificate_hash": "249da9165daba6f19654b776f5866d510771df7d"
+          }
+        },
+        {
+          "client_id": "923416045439-b2o5vvg1g90tmj5i0bsi2m3922b37lqq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtr8KLQqIrsqiBu3YsGShvH5lSVoKx96Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "923416045439-b2o5vvg1g90tmj5i0bsi2m3922b37lqq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

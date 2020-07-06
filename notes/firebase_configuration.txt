@@ -1,0 +1,3 @@
+1) Creation of the Firebase App in the console - https://codelabs.developers.google.com/codelabs/flutter-firebase/#6
+2) Follow install from https://pub.dev/packages/firebase_ml_vision#-readme-tab-
+3) Follow readme from https://pub.dev/packages/firebase_ml_vision#-readme-tab-
