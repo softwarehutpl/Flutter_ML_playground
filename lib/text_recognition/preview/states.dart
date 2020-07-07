@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 abstract class PreviewState {
 
-  PreviewState copy({ CameraController controller, List<TextBlock> texts, Size imageSize }) { return this; }
+  PreviewState copy({ CameraController controller, List<TextBlock> texts, double imageAspectRatio }) { return this; }
 }
 
 class InitialPreviewState extends PreviewState {}
@@ -13,16 +13,16 @@ class ReadyPreviewState extends PreviewState {
 
   final CameraController controller;
   final List<TextBlock> texts;
-  final Size imageSize;
+  final double imageAspectRatio;
 
-  ReadyPreviewState({@required this.controller, this.texts, this.imageSize });
+  ReadyPreviewState({@required this.controller, this.texts, this.imageAspectRatio });
 
   @override
-  PreviewState copy({ CameraController controller, List<TextBlock> texts, Size imageSize }) {
+  PreviewState copy({ CameraController controller, List<TextBlock> texts, double imageAspectRatio }) {
     return ReadyPreviewState(
         controller: controller ?? this.controller,
         texts: texts ?? this.texts,
-        imageSize: imageSize ?? this.imageSize
+        imageAspectRatio: imageAspectRatio ?? this.imageAspectRatio
     );
   }
 }

@@ -1,10 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:readnod/extensions/firebase_ml_vision/TextRecognizer.dart';
+import 'package:readnod/extensions/camera/CameraImage.dart';
 import 'package:readnod/text_recognition/preview/events.dart';
 import 'package:readnod/text_recognition/preview/states.dart';
-import 'package:readnod/extensions/firebase_ml_vision/TextRecognizer.dart';
 
 class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
 
@@ -39,7 +39,7 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
     }
 
     if (event is RecognizedTextsPreviewEvent) {
-      yield state.copy(texts: event.texts, imageSize: event.imageSize);
+      yield state.copy(texts: event.texts, imageAspectRatio: event.imageAspectRatio);
     }
   }
 
@@ -52,11 +52,11 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
       await _controller.startImageStream((image) async {
         if (isRecognizing) { return null; }
         isRecognizing = true;
-        final imageSize = Size(image.width.toDouble(), image.height.toDouble()); // FIXME Size should be picked base on rotation
         final orientationAngle = _controller.description.sensorOrientation;
         final recognition = await _textRecognizer.processCameraImage(image, orientationAngle);
+        final imageAspectRatio = image.calculateAspectRatio();
         isRecognizing = false;
-        add(RecognizedTextsPreviewEvent(texts: recognition.blocks, imageSize: imageSize));
+        add(RecognizedTextsPreviewEvent(texts: recognition.blocks, imageAspectRatio: imageAspectRatio));
       });
       add(InitializedPreviewEvent());
     } catch(e) {

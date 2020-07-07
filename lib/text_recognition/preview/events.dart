@@ -12,7 +12,7 @@ class SwitchCameraPreviewEvent extends PreviewEvent { }
 class RecognizedTextsPreviewEvent extends PreviewEvent {
 
   final List<TextBlock> texts;
-  final Size imageSize;
+  final double imageAspectRatio;
 
-  RecognizedTextsPreviewEvent({ @required this.texts, @required this.imageSize });
+  RecognizedTextsPreviewEvent({ @required this.texts, @required this.imageAspectRatio });
 }

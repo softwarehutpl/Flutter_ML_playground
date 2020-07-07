@@ -23,7 +23,7 @@ extension CameraToTextRecognizerBridge on TextRecognizer {
 
   FirebaseVisionImageMetadata _prepareMetadata(CameraImage image, int orientationAngle) {
     return FirebaseVisionImageMetadata(
-      size: Size(image.width.toDouble(),image.height.toDouble()), // FIXME Size should be picked base on rotation
+      size: Size(image.width.toDouble(),image.height.toDouble()),
       rawFormat: image.format.raw,
       planeData: image.planes.map((currentPlane) => FirebaseVisionImagePlaneMetadata(
           bytesPerRow: currentPlane.bytesPerRow,
