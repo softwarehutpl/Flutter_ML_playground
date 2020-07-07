@@ -9,6 +9,8 @@ import 'package:native_device_orientation/native_device_orientation.dart';
 
 extension CameraToTextRecognizerBridge on TextRecognizer {
 
+  static const _fullCircleDegrees = 360;
+
   Future<VisionText> processCameraImage(CameraImage image, int sensorOrientation, NativeDeviceOrientation deviceOrientation) {
     final bytes = _concatenatePlanes(image.planes);
     final metadata = _prepareMetadata(image, sensorOrientation, deviceOrientation);
@@ -52,7 +54,7 @@ extension CameraToTextRecognizerBridge on TextRecognizer {
         break;
     }
 
-    final complexOrientation = (sensorOrientation + deviceOrientationCompensation) % 360;
+    final complexOrientation = (sensorOrientation + deviceOrientationCompensation) % _fullCircleDegrees;
     switch(complexOrientation) {
       case 0: return ImageRotation.rotation0;
       case 90: return ImageRotation.rotation90;

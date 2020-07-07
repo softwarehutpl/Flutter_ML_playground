@@ -17,6 +17,7 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
   int _currentCameraIndex = _firstCameraIndex;
 
   final NativeDeviceOrientationCommunicator _deviceOrientationProvider = NativeDeviceOrientationCommunicator();
+  NativeDeviceOrientation _lastKnownDeviceOrientation; 
 
   final TextRecognizer _textRecognizer = FirebaseVision.instance.textRecognizer();
   bool isRecognizing = false;
@@ -75,7 +76,10 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
     NativeDeviceOrientation deviceOrientation;
     try {
       deviceOrientation = await _deviceOrientationProvider.orientation(useSensor: true).timeout(Duration(milliseconds: 300));
-    } catch (e) { /*MARK do nothing, should assume orientation portraitUp */ }
+    } catch (e) { 
+      deviceOrientation = _lastKnownDeviceOrientation;
+    }
+    _lastKnownDeviceOrientation = deviceOrientation;
     final sensorOrientation = _controller.description.sensorOrientation;
     final recognition = await _textRecognizer.processCameraImage(image, sensorOrientation, deviceOrientation);
     final imageAspectRatio = image.calculateAspectRatio(sensorOrientation);

@@ -164,33 +164,50 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
   List<Widget> _buildRecognizedTexts(BuildContext context, PreviewState state) {
     final List<Widget> texts = [];
     if (state is ReadyPreviewState && state.texts != null) {
-      final size = MediaQuery.of(context).size;
-      final deviceRatio = size.width / size.height;
-      final imageRatio = state.imageAspectRatio;
-      final ratio = ((state.controller.value.aspectRatio) / (deviceRatio / imageRatio));
-      final textsWidgets = state.texts.map((e) {
-        print(e.text);
-        /* TODO take into account device orientation */
-        final topTranslatedToPreview = e.boundingBox.top * ratio;
-        final leftTranslatedToPreview = e.boundingBox.left * ratio;
-        return Positioned(
-            top: topTranslatedToPreview,
-            left: leftTranslatedToPreview,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                e.text,
-                style: TextStyle(
-                    backgroundColor: Colors.white70,
-                    color: Colors.black
+      final turns = _pickTextsRotation(state.deviceOrientation);
+      texts.add(
+          Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                decoration: BoxDecoration(color: Colors.white70, borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                child: RotatedBox(
+                  quarterTurns: turns,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      child: Text(
+                        state.texts.map((e) => e.text).join("\n"),
+                        style: TextStyle(
+                            color: Colors.black
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            )
-        );
-      });
-      texts.addAll(textsWidgets);
+              )
+          )
+      );
     }
     return texts;
+  }
+
+  int _pickTextsRotation(NativeDeviceOrientation orientation) {
+    int turns;
+    switch (orientation) {
+      case NativeDeviceOrientation.landscapeLeft:
+        turns = 1;
+        break;
+      case NativeDeviceOrientation.landscapeRight:
+        turns = 3;
+        break;
+      case NativeDeviceOrientation.portraitDown:
+        turns = 2;
+        break;
+      default:
+        turns = 0;
+        break;
+    }
+    return turns;
   }
 
   @override
