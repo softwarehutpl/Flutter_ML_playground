@@ -5,12 +5,13 @@ import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:native_device_orientation/native_device_orientation.dart';
 
 extension CameraToTextRecognizerBridge on TextRecognizer {
 
-  Future<VisionText> processCameraImage(CameraImage image, int orientationAngle) {
+  Future<VisionText> processCameraImage(CameraImage image, int sensorOrientation, NativeDeviceOrientation deviceOrientation) {
     final bytes = _concatenatePlanes(image.planes);
-    final metadata = _prepareMetadata(image, orientationAngle);
+    final metadata = _prepareMetadata(image, sensorOrientation, deviceOrientation);
     final visionImage = FirebaseVisionImage.fromBytes(bytes, metadata);
     return this.processImage(visionImage);
   }
@@ -21,7 +22,7 @@ extension CameraToTextRecognizerBridge on TextRecognizer {
     return allBytes.done().buffer.asUint8List();
   }
 
-  FirebaseVisionImageMetadata _prepareMetadata(CameraImage image, int orientationAngle) {
+  FirebaseVisionImageMetadata _prepareMetadata(CameraImage image, int sensorOrientation, NativeDeviceOrientation deviceOrientation) {
     return FirebaseVisionImageMetadata(
       size: Size(image.width.toDouble(),image.height.toDouble()),
       rawFormat: image.format.raw,
@@ -30,12 +31,29 @@ extension CameraToTextRecognizerBridge on TextRecognizer {
           height: currentPlane.height,
           width: currentPlane.width
       )).toList(),
-      rotation: _pickImageRotation(orientationAngle),
+      rotation: _pickImageRotation(sensorOrientation, deviceOrientation),
     );
   }
 
-  ImageRotation _pickImageRotation(int orientationAngle) {
-    switch(orientationAngle) {
+  ImageRotation _pickImageRotation(int sensorOrientation, NativeDeviceOrientation deviceOrientation) {
+    int deviceOrientationCompensation = 0;
+    switch (deviceOrientation) {
+      case NativeDeviceOrientation.landscapeLeft:
+        deviceOrientationCompensation = -90;
+        break;
+      case NativeDeviceOrientation.landscapeRight:
+        deviceOrientationCompensation = 90;
+        break;
+      case NativeDeviceOrientation.portraitDown:
+        deviceOrientationCompensation = 180;
+        break;
+      default:
+        deviceOrientationCompensation = 0;
+        break;
+    }
+
+    final complexOrientation = (sensorOrientation + deviceOrientationCompensation) % 360;
+    switch(complexOrientation) {
       case 0: return ImageRotation.rotation0;
       case 90: return ImageRotation.rotation90;
       case 180: return ImageRotation.rotation180;

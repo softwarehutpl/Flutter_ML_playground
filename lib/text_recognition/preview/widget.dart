@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:readnod/navigation.dart';
 import 'package:readnod/text_recognition/preview/bloc.dart';
 import 'package:readnod/text_recognition/preview/events.dart';
@@ -22,6 +23,9 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
   }
 
   @override
@@ -33,7 +37,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
         builder: (BuildContext context, PreviewState state) {
           Widget content = _buildLoadingIndicator(context);
           if (state is ReadyPreviewState) {
-            content = _buildCameraPreview(context, state.controller);
+            content = _buildCameraPreview(context, state);
           }
           if (state is PermissionsNotGrantedPreviewState) {
             content = _buildPermissionsNotGranted(context);
@@ -60,9 +64,11 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
     );
   }
 
-  Widget _buildCameraPreview(BuildContext context, CameraController controller) {
+  Widget _buildCameraPreview(BuildContext context, ReadyPreviewState state) {
+    final controller = state.controller;
     final size = MediaQuery.of(context).size;
-    final deviceRatio = size.width / size.height;
+    double deviceRatio = size.width / size.height;
+
     return Transform.scale(
       scale: controller.value.aspectRatio / deviceRatio,
       child: Center(
@@ -157,13 +163,14 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
 
   List<Widget> _buildRecognizedTexts(BuildContext context, PreviewState state) {
     final List<Widget> texts = [];
-    if (state is ReadyPreviewState) {
+    if (state is ReadyPreviewState && state.texts != null) {
       final size = MediaQuery.of(context).size;
       final deviceRatio = size.width / size.height;
       final imageRatio = state.imageAspectRatio;
       final ratio = ((state.controller.value.aspectRatio) / (deviceRatio / imageRatio));
-      final textsWidgets = state.texts?.map((e) {
+      final textsWidgets = state.texts.map((e) {
         print(e.text);
+        /* TODO take into account device orientation */
         final topTranslatedToPreview = e.boundingBox.top * ratio;
         final leftTranslatedToPreview = e.boundingBox.left * ratio;
         return Positioned(
@@ -180,7 +187,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
               ),
             )
         );
-      }) ?? [];
+      });
       texts.addAll(textsWidgets);
     }
     return texts;
@@ -189,6 +196,12 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
   @override
   void dispose() {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     _bloc.close();
     super.dispose();
   }

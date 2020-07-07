@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:readnod/extensions/firebase_ml_vision/TextRecognizer.dart';
 import 'package:readnod/extensions/camera/CameraImage.dart';
 import 'package:readnod/text_recognition/preview/events.dart';
@@ -14,6 +15,8 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
   List<CameraDescription> _cameras = [];
   CameraController _controller;
   int _currentCameraIndex = _firstCameraIndex;
+
+  final NativeDeviceOrientationCommunicator _deviceOrientationProvider = NativeDeviceOrientationCommunicator();
 
   final TextRecognizer _textRecognizer = FirebaseVision.instance.textRecognizer();
   bool isRecognizing = false;
@@ -39,7 +42,11 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
     }
 
     if (event is RecognizedTextsPreviewEvent) {
-      yield state.copy(texts: event.texts, imageAspectRatio: event.imageAspectRatio);
+      yield state.copy(
+          texts: event.texts,
+          imageAspectRatio: event.imageAspectRatio,
+          deviceOrientation: event.deviceOrientation,
+      );
     }
   }
 
@@ -51,12 +58,7 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
       await _controller.initialize();
       await _controller.startImageStream((image) async {
         if (isRecognizing) { return null; }
-        isRecognizing = true;
-        final orientationAngle = _controller.description.sensorOrientation;
-        final recognition = await _textRecognizer.processCameraImage(image, orientationAngle);
-        final imageAspectRatio = image.calculateAspectRatio();
-        isRecognizing = false;
-        add(RecognizedTextsPreviewEvent(texts: recognition.blocks, imageAspectRatio: imageAspectRatio));
+        await _recognize(image);
       });
       add(InitializedPreviewEvent());
     } catch(e) {
@@ -66,6 +68,23 @@ class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
         yield UnknownErrorPreviewState();
       }
     }
+  }
+
+  Future<void> _recognize(CameraImage image) async {
+    isRecognizing = true;
+    NativeDeviceOrientation deviceOrientation;
+    try {
+      deviceOrientation = await _deviceOrientationProvider.orientation(useSensor: true).timeout(Duration(milliseconds: 300));
+    } catch (e) { /*MARK do nothing, should assume orientation portraitUp */ }
+    final sensorOrientation = _controller.description.sensorOrientation;
+    final recognition = await _textRecognizer.processCameraImage(image, sensorOrientation, deviceOrientation);
+    final imageAspectRatio = image.calculateAspectRatio(sensorOrientation);
+    isRecognizing = false;
+    add(RecognizedTextsPreviewEvent(
+        texts: recognition.blocks,
+        imageAspectRatio: imageAspectRatio,
+        deviceOrientation: deviceOrientation,
+    ));
   }
 
   bool _isPermissionMissingException(Exception e) {
