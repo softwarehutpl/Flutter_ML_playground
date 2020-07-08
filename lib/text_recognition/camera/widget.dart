@@ -241,7 +241,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
           size: 24,
         ),
         onPressed: () {
-          pushScreenNamed(context, ShareWidget.route, arguments: ShareArguments(textToShare: text));
+          pushReplacementNamed(context, ShareWidget.route, arguments: ShareArguments(textToShare: text));
         });
   }
 

@@ -35,6 +35,8 @@ dependencies:
 
   firebase_ml_vision: ^0.9.4
 
+  share: ^0.6.4+3
+
   fluttertoast: ^6.0.1
 
 dev_dependencies:
