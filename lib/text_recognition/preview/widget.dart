@@ -67,8 +67,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
   Widget _buildCameraPreview(BuildContext context, ReadyPreviewState state) {
     final controller = state.controller;
     final size = MediaQuery.of(context).size;
-    double deviceRatio = size.width / size.height;
-
+    final deviceRatio = size.width / size.height;
     return Transform.scale(
       scale: controller.value.aspectRatio / deviceRatio,
       child: Center(
