@@ -114,3 +114,6 @@ ios/Flutter/Flutter.podspec
 **/fastlane/screenshots
 # scan temporary files
 **/fastlane/test_output
+
+# Google-services.json
+**/google-services.json
