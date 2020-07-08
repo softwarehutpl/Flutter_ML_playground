@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:readnod/navigation.dart';
 import 'package:readnod/text_recognition/preview/bloc.dart';
 import 'package:readnod/text_recognition/preview/events.dart';
@@ -22,6 +23,9 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
   }
 
   @override
@@ -33,7 +37,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
         builder: (BuildContext context, PreviewState state) {
           Widget content = _buildLoadingIndicator(context);
           if (state is ReadyPreviewState) {
-            content = _buildCameraPreview(context, state.controller);
+            content = _buildCameraPreview(context, state);
           }
           if (state is PermissionsNotGrantedPreviewState) {
             content = _buildPermissionsNotGranted(context);
@@ -52,7 +56,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
                   bottom: 0.0,
                   child: _buildSwitchCameraButton(context, state),
                 )
-              ],
+              ]..addAll(_buildRecognizedTexts(context, state)),
             ),
           );
         },
@@ -60,7 +64,8 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
     );
   }
 
-  Widget _buildCameraPreview(BuildContext context, CameraController controller) {
+  Widget _buildCameraPreview(BuildContext context, ReadyPreviewState state) {
+    final controller = state.controller;
     final size = MediaQuery.of(context).size;
     final deviceRatio = size.width / size.height;
     return Transform.scale(
@@ -145,7 +150,6 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
                   size: 32,
                 ),
                 onPressed: () {
-                  // TODO: switch camera in round robin fashion
                   _bloc.add(SwitchCameraPreviewEvent());
                 }),
           ),
@@ -156,9 +160,64 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
     }
   }
 
+  List<Widget> _buildRecognizedTexts(BuildContext context, PreviewState state) {
+    final List<Widget> texts = [];
+    if (state is ReadyPreviewState && state.texts != null) {
+      final turns = _pickTextsRotation(state.deviceOrientation);
+      texts.add(
+          Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                decoration: BoxDecoration(color: Colors.white70, borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                child: RotatedBox(
+                  quarterTurns: turns,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      child: Text(
+                        state.texts.map((e) => e.text).join("\n"),
+                        style: TextStyle(
+                            color: Colors.black
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+          )
+      );
+    }
+    return texts;
+  }
+
+  int _pickTextsRotation(NativeDeviceOrientation orientation) {
+    int turns;
+    switch (orientation) {
+      case NativeDeviceOrientation.landscapeLeft:
+        turns = 1;
+        break;
+      case NativeDeviceOrientation.landscapeRight:
+        turns = 3;
+        break;
+      case NativeDeviceOrientation.portraitDown:
+        turns = 2;
+        break;
+      default:
+        turns = 0;
+        break;
+    }
+    return turns;
+  }
+
   @override
   void dispose() {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     _bloc.close();
     super.dispose();
   }

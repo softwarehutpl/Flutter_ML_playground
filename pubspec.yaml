@@ -14,7 +14,7 @@ description: Flutter playgorund for text recognition using Machine Learning.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -31,6 +31,9 @@ dependencies:
   flutter_bloc: ^4.0.1
 
   camera: ^0.5.8+2
+  native_device_orientation: ^0.3.0
+
+  firebase_ml_vision: ^0.9.4
 
 dev_dependencies:
   flutter_test:

@@ -1,0 +1,15 @@
+1) Creation of the Firebase App in the console - https://codelabs.developers.google.com/codelabs/flutter-firebase/#6
+2) Follow install from https://pub.dev/packages/firebase_ml_vision#-readme-tab-
+3) Follow readme from https://pub.dev/packages/firebase_ml_vision#-readme-tab-
+
+Camera provides list of Plane & each of them contains Uint8List of bytes representing format YUV_420_888.
+ML Kit is using Uint8List of bytes to represent format NV21.
+To convert from YUV to NV simply concatenate planes bytes into single list of bytes.
+
+For ML Kit to properly recognize text from camera input proper rotation needs to be provided based on
+real device rotation. See method `_pickImageRotation` in file `TextRecognizer.dart`.
+To get real device rotation check `text_recognition/preview/bloc.dart` & `NativeDeviceOrientationCommunicator`.
+
+RotatedBox or Transform.rotate cause problems with Text widget, there where undesired shift matching width
+or height of the Text widget depending on rotation & that's why for now idea of recognized text places as
+overlay over original one is ditched.
