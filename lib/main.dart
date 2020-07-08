@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:readnod/text_recognition/save/widget.dart';
+import 'package:readnod/text_recognition/share/widget.dart';
 import 'package:readnod/translations.dart';
 import 'package:readnod/navigation.dart';
-import 'package:readnod/text_recognition/preview/widget.dart';
+import 'package:readnod/text_recognition/camera/widget.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,6 +31,8 @@ class MyApp extends StatelessWidget {
       routes: {
         MyHomePage.route: (_) => MyHomePage(),
         CameraPreviewWidget.route: (_) => CameraPreviewWidget(),
+        ShareWidget.route: (_) => ShareWidget(),
+        SaveWidget.route: (_) => SaveWidget(),
       },
     );
   }

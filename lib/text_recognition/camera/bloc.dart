@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:readnod/extensions/firebase_ml_vision/TextRecognizer.dart';
 import 'package:readnod/extensions/camera/CameraImage.dart';
-import 'package:readnod/text_recognition/preview/events.dart';
-import 'package:readnod/text_recognition/preview/states.dart';
+import 'package:readnod/text_recognition/camera/events.dart';
+import 'package:readnod/text_recognition/camera/states.dart';
 
 class PreviewBloc extends Bloc<PreviewEvent, PreviewState> {
 
