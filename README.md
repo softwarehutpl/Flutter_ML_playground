@@ -14,6 +14,9 @@ It's  a playground for text recognition using machine learning & Flutter.
 \- machine learning kit that contains among others OCR
 * [Internationalization and localization](https://pub.dev/packages/intl)
 \- for App hardcoded text to be localized
+* [Native Device Orientation](https://pub.dev/packages/native_device_orientation#-readme-tab-)
+\- allow to determinate correct image rotation based on device sensors.
+Which is needed for ML Kit to work properly.
 
 
 ## Localization
@@ -32,3 +35,10 @@ flutter pub run intl_translation:generate_from_arb --output-dir=lib/l10n --no-us
 ```
 
 Ref. [Flutter documentation](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
+
+## Firebase project
+Since ML Kit Vision is a Firebase library App has corresponding App in Firebase console.  
+For security reasons `google-services.json` file is excluded from this repo.
+If you need access to that file get in touch via `Issues` tab.  
+Or create new project using instruction placed [here](https://codelabs.developers.google.com/codelabs/flutter-firebase/#6)  
+File `google-services.json` should be placed in Android `app` module.
