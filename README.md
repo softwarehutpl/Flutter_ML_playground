@@ -4,6 +4,8 @@ An App that will bring your handwriting into internet world.
 
 It's  a playground for text recognition using machine learning & Flutter.
 
+![App usage video](https://raw.githubusercontent.com/softwarehutpl/Flutter_ML_playground/master/gifs/app_usage.gif)
+
 ## Tech Stack
 
 * [BLoC & Provider](https://pub.dev/packages/flutter_bloc)
