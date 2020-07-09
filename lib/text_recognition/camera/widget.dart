@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:readnod/navigation.dart';
-import 'package:readnod/text_recognition/preview/bloc.dart';
-import 'package:readnod/text_recognition/preview/events.dart';
-import 'package:readnod/text_recognition/preview/states.dart';
+import 'package:readnod/text_recognition/camera/bloc.dart';
+import 'package:readnod/text_recognition/camera/events.dart';
+import 'package:readnod/text_recognition/camera/states.dart';
 import 'package:flutter/services.dart';
+import 'package:readnod/text_recognition/save/widget.dart';
+import 'package:readnod/text_recognition/share/widget.dart';
 import 'package:readnod/translations.dart';
 
 class CameraPreviewWidget extends StatefulWidget {
-  static final route = "/text/recognition/preview";
+  static final route = "/text/recognition/camera";
 
   @override
   _CameraPreviewWidgetState createState() => _CameraPreviewWidgetState();
@@ -164,6 +166,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
     final List<Widget> texts = [];
     if (state is ReadyPreviewState && state.texts != null) {
       final turns = _pickTextsRotation(state.deviceOrientation);
+      final text = state.texts.map((e) => e.text).join("\n");
       texts.add(
           Align(
               alignment: Alignment.topLeft,
@@ -171,16 +174,12 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
                 decoration: BoxDecoration(color: Colors.white70, borderRadius: BorderRadius.all(Radius.circular(16.0))),
                 child: RotatedBox(
                   quarterTurns: turns,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                      child: Text(
-                        state.texts.map((e) => e.text).join("\n"),
-                        style: TextStyle(
-                            color: Colors.black
-                        ),
-                      ),
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      _buildRecognizedText(text),
+                      _buildActions(text),
+                    ],
                   ),
                 ),
               )
@@ -209,6 +208,54 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
     return turns;
   }
 
+  Widget _buildRecognizedText(String text) {
+    return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+          child: Text(
+            text,
+            style: TextStyle(
+                color: Colors.black
+            ),
+          ),
+        ),
+      );
+  }
+
+  Widget _buildActions(String text) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        _buildShareAction(text),
+        _buildSaveAction(text),
+      ],
+    );
+  }
+
+  Widget _buildShareAction(String text) {
+    return IconButton(
+        icon: Icon(
+          Icons.share,
+          color: Colors.black,
+          size: 24,
+        ),
+        onPressed: () {
+          pushReplacementNamed(context, ShareWidget.route, arguments: ShareArguments(textToShare: text));
+        });
+  }
+
+  Widget _buildSaveAction(String text) {
+    return IconButton(
+        icon: Icon(
+          Icons.save,
+          color: Colors.black,
+          size: 24,
+        ),
+        onPressed: () {
+          pushReplacementNamed(context, SaveWidget.route, arguments: SaveArguments(textToShare: text));
+        });
+  }
+
   @override
   void dispose() {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -218,7 +265,6 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    _bloc.close();
     super.dispose();
   }
 }

@@ -25,6 +25,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "cameraPreview" : MessageLookupByLibrary.simpleMessage("Uruchom podgląd z aparatu"),
     "cameraUnknownError" : MessageLookupByLibrary.simpleMessage("Nie udało się zainicjalizować podglądu z aparatu z powodu nieznanego błędu. Proszę spróbuj ponownie później."),
     "retry" : MessageLookupByLibrary.simpleMessage("Ponów"),
+    "save" : MessageLookupByLibrary.simpleMessage("Zapisz"),
+    "saveEditLabel" : MessageLookupByLibrary.simpleMessage("Tekst do zapisu"),
+    "share" : MessageLookupByLibrary.simpleMessage("Udostępnij"),
+    "shareEditLabel" : MessageLookupByLibrary.simpleMessage("Tekst do udostępnienia"),
     "title" : MessageLookupByLibrary.simpleMessage("Readnod PL")
   };
 }

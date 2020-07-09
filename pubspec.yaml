@@ -35,9 +35,18 @@ dependencies:
 
   firebase_ml_vision: ^0.9.4
 
+  share: ^0.6.4+3
+
+  moor: ^3.2.0
+  moor_ffi: ^0.7.0
+  path_provider:
+  path:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  moor_generator: ^3.2.0
+  build_runner:
 
 flutter:
   uses-material-design: true
