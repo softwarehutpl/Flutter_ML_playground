@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:readnod/navigation.dart';
 import 'package:readnod/text_recognition/camera/bloc.dart';
