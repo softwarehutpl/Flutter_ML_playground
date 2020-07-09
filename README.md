@@ -23,6 +23,13 @@ Which is needed for ML Kit to work properly.
 \- persistent storage on top of sqlite.
 
 
+## iOS config disclaimer
+During development there were none iOS configuration done for project dependencies.  
+So be aware that currently project can have issues with compiling for iOS.  
+This will be addressed later down the line.  
+To see current state please refer to issue [#9 iOS dependecies setup](https://github.com/softwarehutpl/Flutter_ML_playground/issues/9)
+PR with required changes are welcome.
+
 ## Localization
 To add new text & it's translations please add appropriate getter to
 `Localizations.dart` file in same manner that is currently done for title.
