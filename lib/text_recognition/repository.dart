@@ -10,4 +10,9 @@ class TextRecognitionRepository {
   Future<void> storeRecognizedText(String text) {
     return databaseClient.insertTextRecognition(text);
   }
+
+  Stream<List<String>> watchRecognizedTexts() {
+    return databaseClient.watchRecognitions()
+        .map((recognitionsList) => recognitionsList.map((e) => e.recognizedText).toList());
+  }
 }

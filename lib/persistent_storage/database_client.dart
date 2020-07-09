@@ -9,4 +9,8 @@ class DatabaseClient {
       TextRecognitionsCompanion.insert(recognizedText: text)
     );
   }
+
+  Stream<List<TextRecognition>> watchRecognitions() {
+    return _db.textRecognitionDao.watchRecognitions();
+  }
 }

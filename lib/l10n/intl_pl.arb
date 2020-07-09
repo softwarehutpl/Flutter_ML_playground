@@ -49,5 +49,10 @@
   "@saveEditLabel": {
     "type": "text",
     "placeholders": {}
+  },
+  "noRecognitions": "Brak rozpoznanych tekstów.\n Uruchom aparat i zapisz kilka.",
+  "@noRecognitions": {
+    "type": "text",
+    "placeholders": {}
   }
 }

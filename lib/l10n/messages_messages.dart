@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cameraPermissionsNotGranted" : MessageLookupByLibrary.simpleMessage("Camera & Microphone permissions are required. Please grant them in App settings and then retry initialization."),
     "cameraPreview" : MessageLookupByLibrary.simpleMessage("Start camera preview"),
     "cameraUnknownError" : MessageLookupByLibrary.simpleMessage("Unable to initialize camera preview due to unknown error. Please try again later"),
+    "noRecognitions" : MessageLookupByLibrary.simpleMessage("No recognitions.\n Start camera and save some."),
     "retry" : MessageLookupByLibrary.simpleMessage("Retry"),
     "save" : MessageLookupByLibrary.simpleMessage("Save"),
     "saveEditLabel" : MessageLookupByLibrary.simpleMessage("Text to save"),

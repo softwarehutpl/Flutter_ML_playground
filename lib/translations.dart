@@ -97,6 +97,14 @@ class Translations {
       locale: localeName,
     );
   }
+
+  String get noRecognitions {
+    return Intl.message(
+      "No recognitions.\n Start camera and save some.",
+      name: "noRecognitions",
+      locale: localeName,
+    );
+  }
 }
 
 class TranslationsDelegate extends LocalizationsDelegate<Translations> {

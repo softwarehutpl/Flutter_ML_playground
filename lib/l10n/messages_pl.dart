@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cameraPermissionsNotGranted" : MessageLookupByLibrary.simpleMessage("Uprawnienia do korzystania z Aparatu i Mikrofonu są niezbędne. Proszę udostępnij Aplikacji dostęp do nich w ustawieniach systemowych i spróbuj ponownie."),
     "cameraPreview" : MessageLookupByLibrary.simpleMessage("Uruchom podgląd z aparatu"),
     "cameraUnknownError" : MessageLookupByLibrary.simpleMessage("Nie udało się zainicjalizować podglądu z aparatu z powodu nieznanego błędu. Proszę spróbuj ponownie później."),
+    "noRecognitions" : MessageLookupByLibrary.simpleMessage("Brak rozpoznanych tekstów.\n Uruchom aparat i zapisz kilka."),
     "retry" : MessageLookupByLibrary.simpleMessage("Ponów"),
     "save" : MessageLookupByLibrary.simpleMessage("Zapisz"),
     "saveEditLabel" : MessageLookupByLibrary.simpleMessage("Tekst do zapisu"),
