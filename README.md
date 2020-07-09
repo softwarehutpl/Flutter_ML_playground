@@ -67,4 +67,4 @@ Ref. [https://moor.simonbinder.eu/docs/getting-started/](https://moor.simonbinde
 
 ## App usage showcase
 
-![App usage video](https://raw.githubusercontent.com/softwarehutpl/Flutter_ML_playground/feature/i-5_video_in_readme/gifs/app_usage.gif)
+![App usage video](https://raw.githubusercontent.com/softwarehutpl/Flutter_ML_playground/master/gifs/app_usage.gif)
