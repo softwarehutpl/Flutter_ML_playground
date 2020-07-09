@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:readnod/main.dart';
 import 'package:readnod/navigation.dart';
 import 'package:readnod/text_recognition/camera/widget.dart';
 import 'package:readnod/text_recognition/share/bloc.dart';
@@ -51,6 +50,7 @@ class _ShareWidgetState extends State<ShareWidget> {
                 ),
                 body: InkWell(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       _buildEditableText(context, state.text),
                       _buildShareButton(context, state.text),
@@ -92,6 +92,7 @@ class _ShareWidgetState extends State<ShareWidget> {
                 maxLines: null,
                 textInputAction: TextInputAction.newline,
                 decoration: InputDecoration(
+                  labelText: Translations.of(context).shareEditLabel,
                   border: InputBorder.none
                 ),
               ),
@@ -109,7 +110,7 @@ class _ShareWidgetState extends State<ShareWidget> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: RaisedButton(
-              child: Text("Share"), /* TODO Localize */
+              child: Text(Translations.of(context).share.toUpperCase()),
               onPressed: () async {
                 _bloc.add(SaveTextEvent());
                 await Share.share(text);

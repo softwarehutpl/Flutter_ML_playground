@@ -25,6 +25,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "cameraPreview" : MessageLookupByLibrary.simpleMessage("Start camera preview"),
     "cameraUnknownError" : MessageLookupByLibrary.simpleMessage("Unable to initialize camera preview due to unknown error. Please try again later"),
     "retry" : MessageLookupByLibrary.simpleMessage("Retry"),
+    "save" : MessageLookupByLibrary.simpleMessage("Save"),
+    "saveEditLabel" : MessageLookupByLibrary.simpleMessage("Text to save"),
+    "share" : MessageLookupByLibrary.simpleMessage("Share"),
+    "shareEditLabel" : MessageLookupByLibrary.simpleMessage("Text to share"),
     "title" : MessageLookupByLibrary.simpleMessage("Readnod")
   };
 }

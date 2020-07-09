@@ -29,5 +29,25 @@
     "description": "Not much to say it's retry",
     "type": "text",
     "placeholders": {}
+  },
+  "share": "Udostępnij",
+  "@share": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "shareEditLabel": "Tekst do udostępnienia",
+  "@shareEditLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "save": "Zapisz",
+  "@save": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "saveEditLabel": "Tekst do zapisu",
+  "@saveEditLabel": {
+    "type": "text",
+    "placeholders": {}
   }
 }

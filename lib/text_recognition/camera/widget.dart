@@ -253,7 +253,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
           size: 24,
         ),
         onPressed: () {
-          pushScreenNamed(context, SaveWidget.route, arguments: SaveArguments(textToShare: text));
+          pushReplacementNamed(context, SaveWidget.route, arguments: SaveArguments(textToShare: text));
         });
   }
 

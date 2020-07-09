@@ -65,6 +65,38 @@ class Translations {
       locale: localeName,
     );
   }
+
+  String get share {
+    return Intl.message(
+      "Share",
+      name: "share",
+      locale: localeName,
+    );
+  }
+
+  String get shareEditLabel {
+    return Intl.message(
+      "Text to share",
+      name: "shareEditLabel",
+      locale: localeName,
+    );
+  }
+
+  String get save {
+    return Intl.message(
+      "Save",
+      name: "save",
+      locale: localeName,
+    );
+  }
+
+  String get saveEditLabel {
+    return Intl.message(
+        "Text to save",
+      name: "saveEditLabel",
+      locale: localeName,
+    );
+  }
 }
 
 class TranslationsDelegate extends LocalizationsDelegate<Translations> {

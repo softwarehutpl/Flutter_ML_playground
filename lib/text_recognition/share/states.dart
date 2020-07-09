@@ -19,15 +19,3 @@ class EditingTextState extends ShareState {
     return EditingTextState(text: text ?? this.text);
   }
 }
-
-class DelegateShareState extends ShareState {
-
-  DelegateShareState({ @required text }) : super(text: text);
-
-  DelegateShareState.from(ShareState state) : super(text: state.text);
-
-  @override
-  ShareState copy({ String text }) {
-    return DelegateShareState(text: text ?? this.text);
-  }
-}
