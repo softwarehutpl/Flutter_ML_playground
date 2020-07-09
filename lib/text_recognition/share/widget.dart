@@ -126,7 +126,6 @@ class _ShareWidgetState extends State<ShareWidget> {
   void dispose() {
     _textFocus.dispose();
     _textController.dispose();
-    _bloc.close();
     super.dispose();
   }
 }
