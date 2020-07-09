@@ -1,4 +1,4 @@
-import 'package:readnod/persistence_storage/database.dart';
+import 'package:readnod/persistent_storage/database.dart';
 
 class DatabaseClient {
 

@@ -20,7 +20,7 @@ Which is needed for ML Kit to work properly.
 * [Share](https://pub.dev/packages/share#-readme-tab-)
 \- to allow recognized text to be shared through other Apps.
 * [Moor](https://pub.dev/packages/moor#-readme-tab-)
-\- persistence storage on top of sqlite.
+\- persistent storage on top of sqlite.
 
 
 ## Localization

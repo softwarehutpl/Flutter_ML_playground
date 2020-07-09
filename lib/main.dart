@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:readnod/persistence_storage/database_client.dart';
+import 'package:readnod/persistent_storage/database_client.dart';
 import 'package:readnod/text_recognition/repository.dart';
 import 'package:readnod/text_recognition/save/widget.dart';
 import 'package:readnod/text_recognition/share/widget.dart';
