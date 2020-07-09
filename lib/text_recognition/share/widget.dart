@@ -23,13 +23,13 @@ class ShareWidget extends StatefulWidget {
 }
 
 class _ShareWidgetState extends State<ShareWidget> {
-  final ShareBloc _bloc = ShareBloc();
+  ShareBloc _bloc;
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFocus = FocusNode();
-  bool _popToCamera = true;
 
   @override
   Widget build(BuildContext context) {
+    _bloc = ShareBloc(repository: RepositoryProvider.of(context));
     final textToShare = (ModalRoute.of(context).settings.arguments as ShareArguments).textToShare;
 
     return BlocProvider(
@@ -37,9 +37,6 @@ class _ShareWidgetState extends State<ShareWidget> {
       child: BlocListener<ShareBloc, ShareState>(
         bloc: _bloc,
         listener: (context, state) {
-          if (state is DelegateShareState) {
-            /* TODO */
-          }
           if (_textController.text != state.text) {
             _textController.text = state.text;
           }
@@ -60,16 +57,13 @@ class _ShareWidgetState extends State<ShareWidget> {
                     ],
                   ),
                   onTap: () {
-                    print("Should take away focus");
                     _textFocus.unfocus();
                   },
                 ),
               ),
               onWillPop: () async {
-                if (_popToCamera) {
-                  pushReplacementNamed(context, CameraPreviewWidget.route);
-                }
-                return !_popToCamera;
+                pushReplacementNamed(context, CameraPreviewWidget.route);
+                return true;
               },
             );
           },
@@ -117,7 +111,7 @@ class _ShareWidgetState extends State<ShareWidget> {
             child: RaisedButton(
               child: Text("Share"), /* TODO Localize */
               onPressed: () async {
-                _popToCamera = false;
+                _bloc.add(SaveTextEvent());
                 await Share.share(text);
               },
             ),

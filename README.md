@@ -7,16 +7,20 @@ It's  a playground for text recognition using machine learning & Flutter.
 ## Tech Stack
 
 * [BLoC & Provider](https://pub.dev/packages/flutter_bloc)
-\- for business logic & dependency injection
+\- for business logic & dependency injection.
 * [Camera](https://pub.dev/packages/camera)
-\- live camera feed & data source for machine learning process
+\- live camera feed & data source for machine learning process.
 * [ML Kit Vision](https://pub.dev/packages/firebase_ml_vision#-readme-tab-)
-\- machine learning kit that contains among others OCR
+\- machine learning kit that contains among others OCR.
 * [Internationalization and localization](https://pub.dev/packages/intl)
-\- for App hardcoded text to be localized
+\- for App hardcoded text to be localized.
 * [Native Device Orientation](https://pub.dev/packages/native_device_orientation#-readme-tab-)
 \- allow to determinate correct image rotation based on device sensors.
 Which is needed for ML Kit to work properly.
+* [Share](https://pub.dev/packages/share#-readme-tab-)
+\- to allow recognized text to be shared through other Apps.
+* [Moor](https://pub.dev/packages/moor#-readme-tab-)
+\- persistence storage on top of sqlite.
 
 
 ## Localization
@@ -42,3 +46,14 @@ For security reasons `google-services.json` file is excluded from this repo.
 If you need access to that file get in touch via `Issues` tab.  
 Or create new project using instruction placed [here](https://codelabs.developers.google.com/codelabs/flutter-firebase/#6)  
 File `google-services.json` should be placed in Android `app` module.
+
+## Database
+If there is a need to add new table go to `lib/persistence_storage/databse.dart`.  
+Please add table & dao class. Once you define table add it's class to `tables`  
+array in annotation for `Database` class. Do same for dao.  
+After that you should run
+`flutter packages pub run build_runner build` in CLI to generate code or
+just run `flutter packages pub run build_runner watch` to auto generate it
+on every save.
+
+Ref. [https://moor.simonbinder.eu/docs/getting-started/](https://moor.simonbinder.eu/docs/getting-started/)

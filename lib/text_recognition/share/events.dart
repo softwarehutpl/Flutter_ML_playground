@@ -9,6 +9,4 @@ class TextChangedEvent extends ShareEvent {
   TextChangedEvent({ @required this.newText });
 }
 
-class ShareTextEvent extends ShareEvent {}
-
-class ShareCanceledEvent extends ShareEvent {}
+class SaveTextEvent extends ShareEvent {}

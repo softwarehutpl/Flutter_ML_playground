@@ -37,11 +37,18 @@ dependencies:
 
   share: ^0.6.4+3
 
+  moor: ^3.2.0
+  moor_ffi: ^0.7.0
+  path_provider:
+  path:
+
   fluttertoast: ^6.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  moor_generator: ^3.2.0
+  build_runner:
 
 flutter:
   uses-material-design: true
