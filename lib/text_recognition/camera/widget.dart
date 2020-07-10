@@ -265,6 +265,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    _bloc.close();
     super.dispose();
   }
 }

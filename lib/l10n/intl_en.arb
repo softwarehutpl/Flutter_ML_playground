@@ -49,5 +49,10 @@
   "@saveEditLabel": {
     "type": "text",
     "placeholders": {}
+  },
+  "noRecognitions": "No recognitions.\n Start camera and save some.",
+  "@noRecognitions": {
+    "type": "text",
+    "placeholders": {}
   }
 }

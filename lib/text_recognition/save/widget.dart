@@ -125,6 +125,7 @@ class _SaveWidgetState extends State<SaveWidget> {
   void dispose() {
     _textFocus.dispose();
     _textController.dispose();
+    _bloc.close();
     super.dispose();
   }
 }

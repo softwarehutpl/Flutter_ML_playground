@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-07-09T13:41:11.423678",
+  "@@last_modified": "2020-07-09T17:07:23.340875",
   "title": "Readnod",
   "@title": {
     "description": "Application title/name",
@@ -47,6 +47,11 @@
   },
   "saveEditLabel": "Text to save",
   "@saveEditLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noRecognitions": "No recognitions.\n Start camera and save some.",
+  "@noRecognitions": {
     "type": "text",
     "placeholders": {}
   }
